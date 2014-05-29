@@ -1,0 +1,37 @@
+<%= form_for @post do |f| %>
+  <fieldset>
+    <legend>New post</legend>
+
+    <% if @post.errors.any? %>
+      <div class="alert alert-error">
+        <strong>Your post could not be saved due to the following errors:</strong>
+        <ul>
+        <% @post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+
+    <% end %>
+
+    <div class="control-group">
+      <%= f.label :title, :class => "control-label" %>
+      <%= f.text_field :title, :class => "input-large" %>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :url, "URL", :class => "control-label" %>
+      <%= f.text_field :url, :class => "input-large" %>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :description, :class => "control-label" %>
+      <%= f.text_area :description, :rows => 5, :class => "input-xxlarge" %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit :class => "btn btn-primary", :value => "Save" %>
+      <%= link_to "Cancel", posts_path, :class => "btn" %>
+    </div>
+  </fieldset>
+<% end %>

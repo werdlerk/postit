@@ -1,13 +1,48 @@
 <div class="row">
   <div class="span8 well">
-    <%= render post.categories %>
 
-    <h4><%= link_to post.title, post.url %></h4>
-    <p><%= post.description %></p>
-    <p>
-      <span class="quiet">posted by</span> <%= post.creator.username %>
-      <small>at <%= post.created_at %></small>
-    </p>
-    <%= link_to("#{post.comments.size} comment(s)", post_path(post)) %>
+    <!-- title + link button -->
+    <div class="row">
+      <div class="span7">
+        <h3 style="margin:0;"><%= link_to post.title, post_path(post) %></h3>
+      </div>
+      <div class="span1">
+        <% if post.url && !post.url.empty? %>
+          <%= link_to post.url, :class => "btn" do %>
+            <i class="icon-share"></i>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- description text -->
+    <div class="row">
+      <div class="span8">
+        <p class="lead"><%= post.description %></p>
+        <small>
+          <span class="quiet">posted by</span> <%= post.creator.username %>
+          <span class="quiet">at <%= post.created_at %></span>
+        </small>
+      </div>
+    </div>
+    
+    <!-- comments and categories -->
+    <div class="row">
+      <div class="span5">
+        <%= link_to post_path(post), :class => "btn" do %>
+          <i class="icon-comment"></i>
+          <%= "#{post.comments.size} #{'comment'.pluralize(post.comments.size)}" %>
+        <% end %>
+
+        <%= link_to edit_post_path(post), :class => "btn" do %>
+          <i class="icon-pencil"></i> Edit post
+        <% end %>
+      </div>
+      <div class="span3">
+        <span class="pull-right">
+          <%= render post.categories %>
+        </span>
+      </div>
+    </div>    
   </div>
 </div>
