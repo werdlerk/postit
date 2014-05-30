@@ -1,10 +1,11 @@
 class PostsController < ApplicationController
+  before_action :get_post, only: [:show, :edit, :update]
+
   def index
     @posts = Post.all
   end
 
   def show
-    @post = Post.find(params[:id])
   end
 
   def new
@@ -25,12 +26,9 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
   end
 
   def update
-    @post = Post.find(params[:id])
-
     if @post.update(post_params)
       flash[:notice] = "Your post has been updated."
       redirect_to post_path(@post)
@@ -45,5 +43,9 @@ class PostsController < ApplicationController
   def post_params
     # require(..).permit! to permit everything 
     params.require(:post).permit(:title, :url, :description)
+  end
+
+  def get_post
+    @post = Post.find(params[:id])
   end
 end
