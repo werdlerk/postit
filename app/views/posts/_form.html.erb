@@ -2,6 +2,7 @@
   <fieldset>
     <legend>New post</legend>
 
+    <div class="well">
     <% if @post.errors.any? %>
       <div class="alert alert-error">
         <strong>Your post could not be saved due to the following errors:</strong>
@@ -32,6 +33,8 @@
     <div class="form-actions">
       <%= f.submit :class => "btn btn-primary", :value => "Save" %>
       <%= link_to "Cancel", posts_path, :class => "btn" %>
+    </div>
+
     </div>
   </fieldset>
 <% end %>

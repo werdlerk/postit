@@ -7,3 +7,9 @@
 <hr/>
 
 <p>Creator: <%= @post.creator.username %></p>
+
+<hr/>
+
+<%= link_to edit_post_path(@post), :class => "btn" do %>
+  <i class="icon-pencil"></i> Edit post
+<% end %>

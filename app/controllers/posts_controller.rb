@@ -13,13 +13,14 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
+    # TODO: change once we have authentication
     @post.creator = User.find(1)
 
     if @post.save
       flash[:notice] = "Your post has been created."
       redirect_to posts_path
     else
-      render 'new'
+      render :new
     end
   end
 
@@ -32,9 +33,9 @@ class PostsController < ApplicationController
 
     if @post.update(post_params)
       flash[:notice] = "Your post has been updated."
-      redirect_to posts_path
+      redirect_to post_path(@post)
     else
-      render 'edit'
+      render :edit
     end
   end
 
