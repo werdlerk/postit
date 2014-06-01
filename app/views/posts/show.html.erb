@@ -1,3 +1,5 @@
+<%= render "shared/breadcrumb", nodes: [link_to("Posts", posts_path), @post.title] %>
+
 <p><%= render @post.categories %></p>
 
 <%= render 'shared/content_title', title: @post.title %>

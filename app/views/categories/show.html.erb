@@ -1,3 +1,5 @@
-<%= render "shared/content_title", title: "All posts for #{@category.name}" %>
+<%= render "shared/breadcrumb", nodes: [link_to("Categories"), "#{@category.name}"] %>
+
+<%= render "shared/content_title", title: "Posts for category '#{@category.name}'" %>
 
 <%= render @category.posts %>

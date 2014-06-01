@@ -1,3 +1,5 @@
-<p class="lead">Welcome to Postit! The place where posting "it" gains a whole new meaning!</p>
+<%= render 'shared/breadcrumb', nodes: [] %>
+
+<%= render "shared/content_title", title: "All Posts" %>
 
 <%= render @posts %>

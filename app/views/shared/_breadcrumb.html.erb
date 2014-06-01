@@ -1,0 +1,18 @@
+<ul class="breadcrumb">
+  <li>
+    <%= link_to "Home", root_path %>
+
+    <% nodes.each do |node| %>
+      <% if node.include?("<a") %>
+        <span class="divider">/</span>
+      </li>
+      <li>
+        <%= node %>
+    <% else %>
+        <span class="divider">/</span>
+      </li>
+      <li class="active"><%= node %></li>
+    <% end %>
+  <% end %>
+  </li>
+</ul>
