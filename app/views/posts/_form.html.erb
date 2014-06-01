@@ -1,13 +1,4 @@
-<% if @post.errors.any? %>
-  <div class="alert alert-error">
-    <strong>Your post could not be saved due to the following errors:</strong>
-    <ul>
-    <% @post.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
+<%= render "shared/error_messages", object: @post %>
 
 <%= form_for @post do |f| %>
   <div class="well">
