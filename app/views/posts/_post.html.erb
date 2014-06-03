@@ -8,7 +8,7 @@
       </div>
       <div class="span1">
         <% if post.url && !post.url.empty? %>
-          <%= link_to post.url, :class => "btn" do %>
+          <%= link_to safe_url(post.url), :class => "btn" do %>
             <i class="icon-share"></i>
           <% end %>
         <% end %>
