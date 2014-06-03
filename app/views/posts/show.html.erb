@@ -15,3 +15,25 @@
 <%= link_to edit_post_path(@post), :class => "btn" do %>
   <i class="icon-pencil"></i> Edit post
 <% end %>
+
+<hr/>
+
+<h4>Comments</h4>
+
+<% @post.comments.each do |comment| %>
+  <blockquote>
+    <p><%= comment.body %></p>
+    <small><%= comment.creator.username %> at <%= comment.created_at %></small>
+  </blockquote>
+<% end %>
+
+<hr/>
+
+<%= render "shared/error_messages", object: @comment %>
+<%= form_for [@post, @comment] do |f| %>
+  <div class="control-group">
+    <%= f.label :body, "Add a comment" %>
+    <%= f.text_area :body, :class => "form-control" %>
+  </div>
+  <%= f.submit "Save", :class => "btn" %>
+<% end %>
