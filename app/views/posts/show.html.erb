@@ -2,19 +2,13 @@
 
 <p><%= render @post.categories %></p>
 
+<%= link_to edit_post_path(@post), :class => "btn pull-right" do %>
+  <i class="icon-pencil"></i> Edit post
+<% end %>
+
 <%= render 'shared/content_title', title: @post.title %>
 
 <p><%= @post.description %></p>
-
-<hr/>
-
-<p>Creator: <%= @post.creator.username %></p>
-
-<hr/>
-
-<%= link_to edit_post_path(@post), :class => "btn" do %>
-  <i class="icon-pencil"></i> Edit post
-<% end %>
 
 <hr/>
 
@@ -33,7 +27,7 @@
 <%= form_for [@post, @comment] do |f| %>
   <div class="control-group">
     <%= f.label :body, "Add a comment" %>
-    <%= f.text_area :body, :class => "form-control" %>
+    <%= f.text_area :body, :class => "form-control span4", :rows => 3 %>
   </div>
   <%= f.submit "Save", :class => "btn" %>
 <% end %>

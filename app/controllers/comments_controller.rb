@@ -2,9 +2,8 @@ class CommentsController < ApplicationController
 
 
   def create
-    @comment = Comment.new(params.require(:comment).permit(:body))
     @post = Post.find(params[:post_id])
-    @comment.post = @post
+    @comment = @post.comments.build(params.require(:comment).permit(:body))
     @comment.creator = User.first # TODO replace with authenticated user
 
     if @comment.save 
