@@ -1,0 +1,7 @@
+<%= render "shared/content_title", title: "Search results for '#{@search}'" %>
+
+<% if @posts.empty? %>
+  No posts found.
+<% else %>
+  <%= render @posts %>
+<% end %>

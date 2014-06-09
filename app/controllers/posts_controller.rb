@@ -38,12 +38,20 @@ class PostsController < ApplicationController
     end
   end
 
+  def search
+    @search = params[:q]
+    if @search.empty?
+      redirect_to root_path
+    else
+      @posts = Post.where("title like ?", "%#{@search}%")
+    end
+  end
 
   private
 
   def post_params
     # require(..).permit! to permit everything 
-    params.require(:post).permit(:title, :url, :description)
+    params.require(:post).permit(:title, :url, :description, category_ids: [])
   end
 
   def get_post

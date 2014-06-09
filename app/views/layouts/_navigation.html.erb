@@ -16,9 +16,24 @@
           New Category
         <% end %>
       </li>
+      <!-- <li>
+        <%= link_to categories_path do %>
+          <i class="icon-tags"></i>
+          Edit Categories
+        <% end %>
+      </li> -->
     </ul>
   </li>
 </ul>
+
 <div class="nav_item">
   <%= link_to "New Post", new_post_path, :class => "btn btn-success btn-small" %>
+</div>
+
+
+<div class="nav_item pull-right">
+<%= form_tag("/posts/search", method: :get, enforce_utf8: false, class: "navbar-search") do %>
+  <%= search_field_tag(:q, nil, class: "search-query", placeholder: "Search") %>
+  <%= submit_tag("Search", name: nil) %>
+<% end %>
 </div>

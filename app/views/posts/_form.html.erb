@@ -16,6 +16,16 @@
       <%= f.label :description, :class => "control-label" %>
       <%= f.text_area :description, :rows => 5, :class => "input-xxlarge" %>
     </div>
+
+    <div class="control-group">
+      <%= f.label :categories, :class => "control-label" %>
+      <% Category.all.each do |category| %>
+        <label class="checkbox inline">
+          <input type="checkbox" name="post[category_ids][]" value="<%= category.id %>" <%= @post.category_ids.include?(category.id) ? "checked=checked" : "" %>>
+          <%= category.name %>
+        </label>
+      <% end %>
+    </div>
   </div>
   <div class="form-actions">
     <%= f.submit(@post.new_record? ? "Create Post" : "Update Post", :class => "btn btn-primary") %>

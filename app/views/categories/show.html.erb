@@ -2,4 +2,11 @@
 
 <%= render "shared/content_title", title: "Posts for category '#{@category.name}'" %>
 
-<%= render @category.posts %>
+<% if @category.posts.empty? %>
+  <div class="alert alert-info"%>
+    <h4>No posts found</h4>
+    No post was found with this category. 
+  </div>
+<% else %>
+  <%= render @category.posts %>
+<% end %>
