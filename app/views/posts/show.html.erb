@@ -17,7 +17,7 @@
 <% @post.comments.each do |comment| %>
   <blockquote>
     <p><%= comment.body %></p>
-    <small><%= comment.creator.username %> at <%= comment.created_at %></small>
+    <small><%= comment.creator.username %> at <%= format_datetime(comment.created_at) %></small>
   </blockquote>
 <% end %>
 

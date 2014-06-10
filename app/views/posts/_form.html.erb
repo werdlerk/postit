@@ -19,7 +19,7 @@
 
     <div class="control-group">
       <%= f.label :categories, :class => "control-label" %>
-      <%= f.collection_check_boxes(:post, :category_ids, Category.all, :id, :name) do |cb| %>
+      <%= collection_check_boxes(:post, :category_ids, Category.all, :id, :name) do |cb| %>
         <%= cb.label(class: "checkbox inline") do %>
           <%= cb.check_box %>
           <%= cb.text %>

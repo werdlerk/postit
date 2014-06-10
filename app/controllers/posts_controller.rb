@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :get_post, only: [:show, :edit, :update]
 
   def index
-    @posts = Post.all
+    @posts = Post.all.newest_first
   end
 
   def show

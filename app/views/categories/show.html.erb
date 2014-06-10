@@ -4,8 +4,7 @@
 
 <% if @category.posts.empty? %>
   <div class="alert alert-info"%>
-    <h4>No posts found</h4>
-    No post was found with this category. 
+    <strong>No posts found</strong> with the category '<%= @category.name %>'.
   </div>
 <% else %>
   <%= render @category.posts %>

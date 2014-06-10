@@ -21,7 +21,7 @@
         <p class="lead"><%= post.description %></p>
         <small>
           <span class="quiet">posted by</span> <%= post.creator.username %>
-          <span class="quiet">at <%= post.created_at %></span>
+          <span class="quiet">at <%= format_datetime(post.created_at) %></span>
         </small>
       </div>
     </div>
