@@ -4,9 +4,11 @@ class Post < ActiveRecord::Base
   has_many :post_categories
   has_many :categories, through: :post_categories
 
-  scope :newest_first, order('created_at DESC')
+  scope :newest_first, -> { order('created_at DESC') }
 
   validates :title, presence: true, length: {minimum: 5}
   validates :description, presence: true
-  validates :url, uniqueness: true
+  validates :url, uniqueness: true, allow_blank: true
+  validates :categories, presence: true
+  validates :creator, presence: true
 end

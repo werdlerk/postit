@@ -3,13 +3,14 @@
 
     <!-- title + link button -->
     <div class="row">
-      <div class="span7">
+      <div class="span6">
         <h3 style="margin:0;"><%= link_to post.title, post_path(post) %></h3>
       </div>
-      <div class="span1">
+      <div class="span2">
         <% if post.url && !post.url.empty? %>
           <%= link_to safe_url(post.url), :class => "btn" do %>
             <i class="icon-share"></i>
+            <%= display_url(post.url) %>
           <% end %>
         <% end %>
       </div>
@@ -29,13 +30,11 @@
     <!-- comments and categories -->
     <div class="row">
       <div class="span5">
-        <%= link_to post_path(post), :class => "btn" do %>
-          <i class="icon-comment"></i>
-          <%= "#{post.comments.size} #{'comment'.pluralize(post.comments.size)}" %>
-        <% end %>
-
-        <%= link_to edit_post_path(post), :class => "btn" do %>
-          <i class="icon-pencil"></i> Edit post
+        <%= link_to post_path(post) do %>
+          <small>
+            <i class="icon-comment"></i>
+            <%= "#{post.comments.size} #{'comment'.pluralize(post.comments.size)}" %>
+          </small>
         <% end %>
       </div>
       <div class="span3">

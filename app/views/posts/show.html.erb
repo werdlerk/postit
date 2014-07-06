@@ -2,13 +2,15 @@
 
 <p><%= render @post.categories %></p>
 
-<%= link_to edit_post_path(@post), :class => "btn pull-right" do %>
-  <i class="icon-pencil"></i> Edit post
+<% if current_user == @post.creator %>
+  <%= link_to edit_post_path(@post), :class => "btn pull-right" do %>
+    <i class="icon-pencil"></i> Edit post
+  <% end %>
 <% end %>
 
 <%= render 'shared/content_title', title: @post.title %>
 
-<p><%= @post.description %></p>
+<p><%= raw(format_description(@post.description)) %></p>
 
 <hr/>
 
