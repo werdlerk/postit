@@ -6,9 +6,9 @@
       <div class="span6">
         <h3 style="margin:0;"><%= link_to post.title, post_path(post) %></h3>
       </div>
-      <div class="span2">
+      <div class="span2 pull-right">
         <% if post.url && !post.url.empty? %>
-          <%= link_to safe_url(post.url), :class => "btn" do %>
+          <%= link_to safe_url(post.url), target: :blank, :class => "btn pull-right" do %>
             <i class="icon-share"></i>
             <%= display_url(post.url) %>
           <% end %>
@@ -19,7 +19,7 @@
     <!-- description text -->
     <div class="row">
       <div class="span8">
-        <p class="lead"><%= post.description %></p>
+        <p class="lead"><%= abbreviate(post.description) %></p>
         <small>
           <span class="quiet">posted by</span> <%= post.creator.username %>
           <span class="quiet">at <%= format_datetime(post.created_at) %></span>
@@ -30,7 +30,7 @@
     <!-- comments and categories -->
     <div class="row">
       <div class="span5">
-        <%= link_to post_path(post) do %>
+        <%= link_to post_path(post) + "#comments" do %>
           <small>
             <i class="icon-comment"></i>
             <%= "#{post.comments.size} #{'comment'.pluralize(post.comments.size)}" %>

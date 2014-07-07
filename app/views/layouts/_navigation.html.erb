@@ -44,7 +44,7 @@
           </li>
         </ul>
 
-        <%= form_tag("/posts/search", method: :get, enforce_utf8: false, class: "navbar-search pull-left") do %>
+        <%= form_tag(search_posts_path, { method: :get, enforce_utf8: false, class: "navbar-search pull-left"} ) do %>
           <%= search_field_tag(:q, nil, class: "search-query", placeholder: "Search") %>
         <% end %>
 

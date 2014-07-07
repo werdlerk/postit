@@ -1,5 +1,5 @@
 module PostHelper
-  def format_description(text)
+  def new_line_format(text)
     text.gsub("\n","<br/>")
   end
 

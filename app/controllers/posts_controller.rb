@@ -17,7 +17,6 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    # TODO: change once we have authentication
     @post.creator = current_user
 
     if @post.save

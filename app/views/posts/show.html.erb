@@ -1,7 +1,5 @@
 <%= render "shared/breadcrumb", nodes: [link_to("Posts", posts_path), @post.title] %>
 
-<p><%= render @post.categories %></p>
-
 <% if current_user == @post.creator %>
   <%= link_to edit_post_path(@post), :class => "btn pull-right" do %>
     <i class="icon-pencil"></i> Edit post
@@ -10,26 +8,40 @@
 
 <%= render 'shared/content_title', title: @post.title %>
 
-<p><%= raw(format_description(@post.description)) %></p>
-
-<hr/>
-
-<h4>Comments</h4>
-
-<% @post.comments.each do |comment| %>
-  <blockquote>
-    <p><%= comment.body %></p>
-    <small><%= comment.creator.username %> at <%= format_datetime(comment.created_at) %></small>
-  </blockquote>
+<% if @post.url && !@post.url.empty? %>
+  <%= link_to safe_url(@post.url), target: :blank, :class => "btn pull-right" do %>
+    <i class="icon-share"></i>
+    <%= display_url(@post.url) %>
+  <% end %>
 <% end %>
 
+<p><%= sanitize new_line_format(@post.description), tags: %w(br) %></p>
+
+<p><%= render @post.categories %></p>
+
 <hr/>
 
-<%= render "shared/error_messages", object: @comment %>
-<%= form_for [@post, @comment] do |f| %>
-  <div class="control-group">
-    <%= f.label :body, "Add a comment" %>
-    <%= f.text_area :body, :class => "form-control span4", :rows => 3 %>
-  </div>
-  <%= f.submit "Save", :class => "btn" %>
+<% if @post.comments.select { |comment| comment.id.present? }.any? %>
+  <h4>Comments</h4> <a name="comments"></a>
+
+  <% @post.comments.select { |comment| comment.id.present? }.each do |comment| %>
+    <blockquote>
+      <p><%= comment.body %></p>
+      <small><%= comment.creator.username %> at <%= format_datetime(comment.created_at) %></small>
+    </blockquote>
+  <% end %>
+
+  <hr/>
+<% end %>
+
+<% if logged_in? %>
+  <%= render "shared/error_messages", object: @comment %>
+
+  <%= form_for [@post, @comment] do |f| %>
+    <div class="control-group">
+      <%= f.label :body, "Add a comment" %>
+      <%= f.text_area :body, :class => "form-control span4", :rows => 3 %>
+    </div>
+    <%= f.submit "Save", :class => "btn" %>
+  <% end %>
 <% end %>
