@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :require_current_user, only: [:edit]
 
   def new
     @user = User.new
@@ -14,7 +15,6 @@ class UsersController < ApplicationController
     else
       render "new"
     end
-
   end
 
   def edit
@@ -26,18 +26,27 @@ class UsersController < ApplicationController
 
     if @user.update(user_params)
       flash[:notice] = "Profile saved"
-      redirect_to edit_user_path(@user)
+      redirect_to user_path(@user)
     else
       render "edit"
     end
   end
 
-
+  def show
+    @user = User.find(params[:id])
+  end
 
   private
 
   def user_params
     params.require(:user).permit(:username, :password)
+  end
+
+  def require_current_user
+    if current_user.id != params[:id].to_i
+      flash[:error] = "Operation forbidden."
+      redirect_to user_path(params[:id])
+    end
   end
 
 end

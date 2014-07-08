@@ -60,7 +60,13 @@
                 <li>
                   <%= link_to new_post_path do %>
                     <i class="icon-pencil"></i>
-                    New Post
+                    Write Post
+                  <% end %>
+                </li>
+                <li>
+                  <%= link_to user_path(current_user) do %>
+                    <i class="icon-flag"></i>
+                    Profile
                   <% end %>
                 </li>
                 <li>

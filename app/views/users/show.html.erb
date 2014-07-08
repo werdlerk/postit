@@ -1,0 +1,32 @@
+<% if current_user == @user %>
+  <%= link_to edit_user_path(@user), class: "btn pull-right" do %>
+    <i class="icon-edit"></i> Edit profile
+  <% end %>
+<% end %>
+
+<%= render "shared/content_title", title: "Profile: #{@user.username}" %>
+
+<div class="well">
+  <dl class="dl-horizontal">
+    <dt>Username:</dt>
+    <dd><%= @user.username %></dd>
+  </dl>
+</div>
+
+<ul class="nav nav-tabs">
+  <li class="active">
+    <%= link_to "Posts (#{@user.posts.size})", "#posts", { "data-toggle" => "tab" } %>
+  </li>
+  <li class="<%= params[:tab] == "comments" ? "active" : "" %>">
+    <%= link_to "Comments (#{@user.comments.size})", "#comments", { "data-toggle" => "tab" } %>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane fade in active" id="posts">
+    <%= render @user.posts %>
+  </div>
+  <div class="tab-pane fade" id="comments">
+    <%= render @user.comments %>
+  </div>
+</div>

@@ -17,19 +17,23 @@
 
 <p><%= sanitize new_line_format(@post.description), tags: %w(br) %></p>
 
-<p><%= render @post.categories %></p>
+<div class="pull-right">
+  <small>
+    <span class="quiet">posted by</span> <%= link_to @post.creator.username, user_path(@post.creator) %>
+    <span class="quiet">at <%= format_datetime(@post.created_at) %></span>
+  </small>
+</div>
+
+<p>
+  <%= render @post.categories %>
+</p>
 
 <hr/>
 
 <% if @post.comments.select { |comment| comment.id.present? }.any? %>
   <h4>Comments</h4> <a name="comments"></a>
 
-  <% @post.comments.select { |comment| comment.id.present? }.each do |comment| %>
-    <blockquote>
-      <p><%= comment.body %></p>
-      <small><%= comment.creator.username %> at <%= format_datetime(comment.created_at) %></small>
-    </blockquote>
-  <% end %>
+  <%= render @post.comments.select { |comment| comment.id.present? } %>
 
   <hr/>
 <% end %>

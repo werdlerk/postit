@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+  before_action :require_user, except: [:show]
 
    def create
     @category = Category.new(params.require(:category).permit(:name))
