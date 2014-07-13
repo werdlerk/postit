@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :require_current_user, only: [:edit]
+  before_action :set_user, only: [:edit, :update, :show]
+  before_action :require_current_user, only: [:edit, :update]
 
   def new
     @user = User.new
@@ -18,12 +19,9 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = current_user
   end
 
   def update
-    @user = current_user
-
     if @user.update(user_params)
       flash[:notice] = "Profile saved"
       redirect_to user_path(@user)
@@ -33,7 +31,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
   end
 
   private
@@ -42,8 +39,12 @@ class UsersController < ApplicationController
     params.require(:user).permit(:username, :password)
   end
 
+  def set_user
+    @user = User.find(params[:id])
+  end
+
   def require_current_user
-    if current_user.id != params[:id].to_i
+    if current_user != @user
       flash[:error] = "Operation forbidden."
       redirect_to user_path(params[:id])
     end

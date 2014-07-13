@@ -1,4 +1,11 @@
+<% show_post ||= false %>
+
 <blockquote>
   <p><%= comment.body %></p>
-  <small><%= comment.creator.username %> at <%= format_datetime(comment.created_at) %></small>
+  <small>
+    <%= comment.creator.username %> at <%= format_datetime(comment.created_at) %>
+    <% if show_post %>
+      on post <%= link_to comment.post.title, post_path(comment.post) %>
+    <% end %>
+  </small>
 </blockquote>

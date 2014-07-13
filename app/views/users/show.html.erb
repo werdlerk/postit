@@ -27,6 +27,6 @@
     <%= render @user.posts %>
   </div>
   <div class="tab-pane fade" id="comments">
-    <%= render @user.comments %>
+    <%= render @user.comments, show_post: true %>
   </div>
 </div>
