@@ -5,12 +5,13 @@ module ApplicationHelper
   end
 
   def display_url(url)
-    if url.nil?
-      return nil
-    end
-
     url = url.sub("http://","").sub("www.","")
-    url[0...url.index("/")]
+    
+    if url.index("/")
+      url[0...url.index("/")]
+    else
+      url
+    end
   end
 
   def format_datetime(datetime)
