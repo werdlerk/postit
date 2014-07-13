@@ -5,6 +5,9 @@ module ApplicationHelper
   end
 
   def display_url(url)
+    if url.nil?
+      return nil
+
     url = url.sub("http://","").sub("www.","")
     url[0...url.index("/")]
   end
