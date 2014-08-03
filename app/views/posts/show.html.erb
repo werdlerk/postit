@@ -33,7 +33,7 @@
 <% if @post.comments.select { |comment| comment.id.present? }.any? %>
   <h4>Comments</h4> <a name="comments"></a>
 
-  <%= render @post.comments.select { |comment| comment.id.present? } %>
+  <%= render @post.comments.select { |comment| comment.id.present? }.sort_by { |comment| comment.votes_total }.reverse %>
 
   <hr/>
 <% end %>

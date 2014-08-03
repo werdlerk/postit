@@ -1,10 +1,10 @@
 class PostsController < ApplicationController
   before_action :get_post, only: [:show, :edit, :update, :vote]
-  before_action :require_user, except: [:show, :index]
+  before_action :require_user, except: [:show, :index, :vote]
   before_action :require_creator, only: [:edit, :update]
 
   def index
-    @posts = Post.all.newest_first
+    @posts = Post.all.newest_first.sort_by { |post| post.votes_total }.reverse
   end
 
   def show
