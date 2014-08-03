@@ -53,7 +53,7 @@
             <li class="dropdown">
               <%= link_to "#", :class => "dropdown-toggle", "data-toggle" => "dropdown" do %>
                 <i class="icon-user"></i>
-                <%= current_user.username %>
+                <span class="username"><%= current_user.username %></span>
                 <span class="caret" ></span>
               <% end %>
               <ul class="dropdown-menu">

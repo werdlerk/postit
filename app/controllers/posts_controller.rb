@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :get_post, only: [:show, :edit, :update]
+  before_action :get_post, only: [:show, :edit, :update, :vote]
   before_action :require_user, except: [:show, :index]
   before_action :require_creator, only: [:edit, :update]
 
@@ -47,6 +47,27 @@ class PostsController < ApplicationController
       @posts = Post.where("title like :searchterms or description like :searchterms", {searchterms: "%#{@search}%"})
     end
   end
+
+  def vote
+    vote_up = params[:vote] == 'true'
+    
+    if Vote.where(voteable: @post, creator: current_user, vote: vote_up).exists?
+      flash[:error] = "You can only vote for a post once"
+      
+    elsif Vote.where(voteable: @post, creator: current_user).exists?
+      Vote.find_by(voteable:@post, creator:current_user).destroy
+      Vote.create(voteable: @post, creator: current_user, vote: vote_up)
+      flash[:notice] = "You've changed your vote for post <i>'#{@post.title}'</i>.".html_safe
+
+    else
+      Vote.create(voteable: @post, creator: current_user, vote: vote_up)
+
+      flash[:notice] = "You've voted for post <i>'#{@post.title}'</i>.".html_safe
+    end
+    
+    redirect_to :back
+  end
+
 
   private
 

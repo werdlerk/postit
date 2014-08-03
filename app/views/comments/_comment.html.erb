@@ -3,9 +3,10 @@
 <blockquote>
   <p><%= comment.body %></p>
   <small>
-    <%= comment.creator.username %> at <%= format_datetime(comment.created_at) %>
+    <span class="username"><%= comment.creator.username %></span> at <%= format_datetime(comment.created_at) %>
     <% if show_post %>
       on post <%= link_to comment.post.title, post_path(comment.post) %>
     <% end %>
   </small>
+  <%= render "votes/vote", voteable: comment %>
 </blockquote>

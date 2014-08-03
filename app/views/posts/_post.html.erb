@@ -21,7 +21,7 @@
       <div class="span8">
         <p class="lead"><%= abbreviate(post.description) %></p>
         <small>
-          <span class="quiet">posted by</span> <%= link_to post.creator.username, user_path(post.creator) %>
+          <span class="quiet">posted by</span> <span class="username"><%= link_to post.creator.username, user_path(post.creator) %></span>
           <span class="quiet">at <%= format_datetime(post.created_at) %></span>
         </small>
       </div>
@@ -29,13 +29,16 @@
     
     <!-- comments and categories -->
     <div class="row">
-      <div class="span5">
+      <div class="span3">
         <%= link_to post_path(post) + "#comments" do %>
           <small>
             <i class="icon-comment"></i>
             <%= "#{post.comments.size} #{'comment'.pluralize(post.comments.size)}" %>
           </small>
         <% end %>
+      </div>
+      <div class="span2" style="text-align:center;">
+        <%= render "votes/vote", voteable: post %>
       </div>
       <div class="span3">
         <span class="pull-right">

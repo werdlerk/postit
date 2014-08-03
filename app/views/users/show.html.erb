@@ -4,7 +4,7 @@
   <% end %>
 <% end %>
 
-<%= render "shared/content_title", title: "Profile: #{@user.username}" %>
+<%= render "shared/content_title", title: raw("Profile: <span class='username'>#{@user.username}</span>") %>
 
 <div class="well">
   <dl class="dl-horizontal">

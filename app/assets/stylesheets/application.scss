@@ -45,3 +45,8 @@ div.comment_votes {
 .field_with_errors {
   @extend .control-group.error
 }
+
+.username {
+  text-transform: capitalize;
+
+}

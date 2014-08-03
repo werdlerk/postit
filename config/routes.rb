@@ -2,8 +2,16 @@ PostitTemplate::Application.routes.draw do
   root to: 'posts#index'
 
   resources :posts, except: [:destroy] do
-    resources :comments, only: [:create]
+    resources :comments, only: [:create] do
+      member do
+        post 'vote'
+      end
+    end
 
+    member do
+      post 'vote'
+    end
+    
     collection do
       get 'search'
     end
@@ -20,6 +28,7 @@ PostitTemplate::Application.routes.draw do
   get "/logout", to: "sessions#destroy"
 
   get "/profile", to: "users#edit"
+
   
 
   # resources :dogs

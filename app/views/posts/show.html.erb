@@ -19,7 +19,7 @@
 
 <div class="pull-right">
   <small>
-    <span class="quiet">posted by</span> <%= link_to @post.creator.username, user_path(@post.creator) %>
+    <span class="quiet">posted by</span> <span class="username"><%= link_to @post.creator.username, user_path(@post.creator) %></span>
     <span class="quiet">at <%= format_datetime(@post.created_at) %></span>
   </small>
 </div>
