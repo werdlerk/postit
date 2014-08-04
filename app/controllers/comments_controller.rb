@@ -18,18 +18,17 @@ class CommentsController < ApplicationController
   def vote
     comment = Comment.find(params[:id])
     vote_up = params[:vote] == 'true'
-    
-    if Vote.where(voteable: comment, creator: current_user, vote: vote_up).exists?
-      flash[:error] = "You can only vote for a comment once"
-      
-    elsif Vote.where(voteable: comment, creator: current_user).exists?
-      Vote.find_by(voteable:comment, creator: current_user).destroy
-      Vote.create(voteable: comment, creator: current_user, vote: vote_up)
-      flash[:notice] = "You've changed your vote for the comment"
+    vote = Vote.new(voteable: comment, creator: current_user, vote: vote_up)
 
+    if vote.valid?
+      if Vote.destroy_all(voteable: comment, creator: current_user).any?
+        flash[:notice] = "You've changed your vote for the comment"
+      else
+        flash[:notice] = "You've voted for the comment"
+      end
+      vote.save
     else
-      Vote.create(voteable: comment, creator: current_user, vote: vote_up)
-      flash[:notice] = "You've voted for the comment"
+      flash[:error] = "You can only vote for a comment once"
     end
     
     redirect_to :back

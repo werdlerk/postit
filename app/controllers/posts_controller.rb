@@ -50,19 +50,17 @@ class PostsController < ApplicationController
 
   def vote
     vote_up = params[:vote] == 'true'
-    
-    if Vote.where(voteable: @post, creator: current_user, vote: vote_up).exists?
-      flash[:error] = "You can only vote for a post once"
-      
-    elsif Vote.where(voteable: @post, creator: current_user).exists?
-      Vote.find_by(voteable:@post, creator:current_user).destroy
-      Vote.create(voteable: @post, creator: current_user, vote: vote_up)
-      flash[:notice] = "You've changed your vote for post <i>'#{@post.title}'</i>.".html_safe
+    vote = Vote.new(voteable: @post, creator: current_user, vote: vote_up)
 
+    if vote.valid?
+      if Vote.destroy_all(voteable: @post, creator: current_user).any?
+        flash[:notice] = "You've changed your vote for post <i>'#{@post.title}'</i>.".html_safe
+      else
+        flash[:notice] = "You've voted for post <i>'#{@post.title}'</i>.".html_safe
+      end
+      vote.save
     else
-      Vote.create(voteable: @post, creator: current_user, vote: vote_up)
-
-      flash[:notice] = "You've voted for post <i>'#{@post.title}'</i>.".html_safe
+      flash[:error] = "You can only vote for a post once"
     end
     
     redirect_to :back
