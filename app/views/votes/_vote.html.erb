@@ -1,31 +1,43 @@
+<% 
+  voteable_name = voteable.class.name.downcase
+  badge_id = "#{voteable_name}_#{voteable.id}_votes"
+  voteup_id = "#{voteable_name}_#{voteable.id}_voteup"
+  votedown_id = "#{voteable_name}_#{voteable.id}_votedown"
+%>
 <% if current_user %>
   <% if voteable.has_voted_up?(current_user) %>
-    <button class="btn btn-mini disabled">
+    <a id="<%= voteup_id %>" class="btn btn-mini disabled">
       <i class="icon-thumbs-up"></i>
-    </button>
+    </a>
+
   <% elsif voteable.is_a?(Post) %>
-    <%= link_to vote_post_path(voteable, vote: true), method: :post, title: 'Vote up', class: 'btn btn-mini' do %><i class="icon-thumbs-up"></i><% end %>
+    <%= link_to vote_post_path(voteable, vote: true), method: :post, remote: true, data: { disable_with: "<i class='fa fa-spinner fa-spin'></i>"}, title: 'Vote up', class: 'btn btn-mini', id: voteup_id do %><i class="icon-thumbs-up"></i><% end %>
+  
   <% elsif voteable.is_a?(Comment) %>
-    <%= link_to vote_post_comment_path(voteable.post, voteable, vote: true), method: :post, title: 'Vote up', class: 'btn btn-mini' do %><i class="icon-thumbs-up"></i><% end %>
+    <%= link_to vote_post_comment_path(voteable.post, voteable, vote: true), method: :post, remote: true, data: { disable_with: "<i class='fa fa-spinner fa-spin'></i>"}, title: 'Vote up', class: 'btn btn-mini', id: voteup_id do %><i class="icon-thumbs-up"></i><% end %>
   <% end %>
 <% end %>
 
 <% if voteable.votes_total == 0 %>
-  <span class="badge" title="Cumulative number of votes for this #{voteable.class.name.downcase}"><%= voteable.votes_total %></span>
+  <span id="<%= badge_id %>" class="badge" title="Cumulative number of votes for this <%= voteable_name %>"><%= voteable.votes_total %></span>
+
 <% elsif voteable.votes_total > 0 %>
-  <span class="badge" title="Cumulative number of votes for this #{voteable.class.name.downcase}" style="background-color:darkgreen;"><%= voteable.votes_total %></span>
+  <span id="<%= badge_id %>" class="badge" title="Cumulative number of votes for this <%= voteable_name %>" style="background-color:darkgreen;"><%= voteable.votes_total %></span>
+
 <% elsif voteable.votes_total < 0 %>
-  <span class="badge" title="Cumulative number of votes for this #{voteable.class.name.downcase}" style="background-color:maroon;"><%= voteable.votes_total %></span>
+  <span id="<%= badge_id %>" class="badge" title="Cumulative number of votes for this <%= voteable_name %>" style="background-color:maroon;"><%= voteable.votes_total %></span>
 <% end %>
 
 <% if current_user %>
   <% if voteable.has_voted_down?(current_user) %>
-    <button class="btn btn-mini disabled">
+    <a id="<%= votedown_id %>" class="btn btn-mini disabled">
       <i class="icon-thumbs-down"></i>
-    </button>
+    </a>
+  
   <% elsif voteable.is_a?(Post) %>
-    <%= link_to vote_post_path(voteable, vote: false), method: :post, title: 'Vote down', class: 'btn btn-mini' do %><i class="icon-thumbs-down" style="color:red;"></i><% end %>
+    <%= link_to vote_post_path(voteable, vote: false), method: :post, remote: true, data: { disable_with: "<i class='fa fa-spinner fa-spin'></i>"}, title: 'Vote down', class: 'btn btn-mini', id: votedown_id do %><i class="icon-thumbs-down"></i><% end %>
+  
   <% elsif voteable.is_a?(Comment) %>
-    <%= link_to vote_post_comment_path(voteable.post, voteable, vote: false), method: :post, title: 'Vote down', class: 'btn btn-mini' do %><i class="icon-thumbs-down"></i><% end %>
+    <%= link_to vote_post_comment_path(voteable.post, voteable, vote: false), method: :post, remote: true, data: { disable_with: "<i class='fa fa-spinner fa-spin'></i>"}, title: 'Vote down', class: 'btn btn-mini', id: votedown_id do %><i class="icon-thumbs-down"></i><% end %>
   <% end %>
 <% end %>

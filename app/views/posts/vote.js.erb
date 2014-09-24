@@ -1,0 +1,52 @@
+<% if flash[:error] %>
+  alert('There was a problem registering your vote.\n<%= flash[:error]%>');
+<% else %>
+  <% 
+    badge_selector = "#post_#{@post.id}_votes"
+    voteup_selector = "#post_#{@post.id}_voteup"
+    votedown_selector = "#post_#{@post.id}_votedown"
+  %>
+
+  // Hide badge for effect
+  $('<%= badge_selector %>').hide();
+
+  // Set background color
+  <% if @post.votes_total == 0 %>
+    $('<%= badge_selector %>').css('background-color', '');
+  <% elsif @post.votes_total > 0 %>
+    $('<%= badge_selector %>').css('background-color', 'darkgreen');
+  <% elsif @post.votes_total < 0 %>
+    $('<%= badge_selector %>').css('background-color', 'maroon');
+  <% end %>
+
+  // Set amount of votes and show with effect
+  $('<%= badge_selector %>').html('<%= @post.votes_total %>').fadeIn(1000);
+
+  // Set vote buttons state by replacing the HTML
+  <% if @vote.vote %>
+    $('<%= voteup_selector %>').replaceWith('<a id="<%= "post_#{@post.id}_voteup" %>" class="btn btn-mini disabled"><i class="icon-thumbs-up"></i></a>');
+
+    $('<%= votedown_selector %>').replaceWith('<%= 
+      link_to raw('<i class="icon-thumbs-down"></i>'), 
+              vote_post_path(@post, vote: false),
+              method: :post,
+              remote: true,
+              data: { disable_with: "<i class='fa fa-spinner fa-spin'></i>"},
+              title: "Vote down",
+              class: "btn btn-mini", 
+              id: "post_#{@post.id}_votedown" %>');
+
+  <% else %>
+    $('<%= voteup_selector %>').replaceWith('<%= 
+      link_to raw('<i class="icon-thumbs-up"></i>'), 
+              vote_post_path(@post, vote: true),
+              method: :post,
+              remote: true,
+              data: { disable_with: "<i class='fa fa-spinner fa-spin'></i>"},
+              title: "Vote up",
+              class: "btn btn-mini", 
+              id: "post_#{@post.id}_voteup" %>');
+
+    $('<%= votedown_selector %>').replaceWith('<a id="<%= "post_#{@post.id}_votedown" %>" class="btn btn-mini disabled"><i class="icon-thumbs-down"></i></a>');
+  <% end %>
+<% end %>
