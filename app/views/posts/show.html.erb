@@ -30,10 +30,13 @@
 
 <hr/>
 
-<% if @post.comments.select { |comment| comment.id.present? }.any? %>
+<% if @post.reload.comments.any? %>
+
   <h4>Comments</h4> <a name="comments"></a>
 
-  <%= render @post.comments.select { |comment| comment.id.present? }.sort_by { |comment| comment.votes_total }.reverse %>
+  <% @post.reload.comments.sort_by {|comment| comment.votes_total }.reverse.each do |comment| %>
+    <%= render 'comments/comment', comment: comment %>
+  <% end %>
 
   <hr/>
 <% end %>
