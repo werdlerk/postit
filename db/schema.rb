@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20141001182103) do
     t.string   "slug"
   end
 
+  add_index "posts", ["slug"], name: "index_posts_on_slug", unique: true
   add_index "posts", ["user_id"], name: "index_posts_on_user_id"
 
   create_table "users", force: true do |t|
