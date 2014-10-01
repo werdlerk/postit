@@ -14,4 +14,22 @@ class Post < ActiveRecord::Base
   validates :url, uniqueness: true, allow_blank: true
   validates :categories, presence: true
   validates :creator, presence: true
+
+  before_save :generate_slug
+
+  def to_param
+    self.slug
+  end
+
+  def generate_slug
+    self.slug = self.title.strip.downcase
+                  .gsub(/(&|&amp;)/, ' and ')
+                  .gsub(/[\s\.\/\\]/, '-')
+                  .gsub(/[^\w-]/, '')
+                  .gsub(/[-_]{2,}/, '-')
+                  .gsub(/^[-_]/, '')
+                  .gsub(/[-_]$/, '')
+  end
+
+
 end

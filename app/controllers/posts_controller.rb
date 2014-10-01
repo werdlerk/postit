@@ -78,7 +78,7 @@ class PostsController < ApplicationController
   end
 
   def get_post
-    @post = Post.find(params[:id])
+    @post = Post.find_by_slug(params[:id])
   end
 
   private
