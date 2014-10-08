@@ -1,4 +1,10 @@
 module Voteable
+  extend ActiveSupport::Concern
+
+  included do
+    has_many :votes, as: :voteable
+  end
+
   def votes_total
     @votes_total ||= votes_up - votes_down
   end
