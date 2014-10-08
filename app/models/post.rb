@@ -13,4 +13,6 @@ class Post < ActiveRecord::Base
   validates :url, uniqueness: true, allow_blank: true
   validates :categories, presence: true
   validates :creator, presence: true
+
+  sluggable_column :title
 end

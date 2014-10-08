@@ -3,6 +3,7 @@ module Sluggable
 
   included do
     before_save :generate_slug!
+    class_attribute :slug_column
   end
 
   def to_param
@@ -10,20 +11,13 @@ module Sluggable
   end
 
   def generate_slug!
-    if self.respond_to? :title
-      slug = to_slug(self.title)
-    elsif self.respond_to? :name
-      slug = to_slug(self.name)
-    elsif self.respond_to? :username
-      slug = to_slug(self.username)
-    end
-
+    slug = to_slug(self.send(self.class.slug_column.to_sym))
     count = 2
-    post = self.class.find_by_slug(slug)
+    obj = self.class.find_by_slug(slug)
 
-    while (post && post != self)
+    while (obj && obj != self)
       slug = to_slug(self.title) + "-" + count.to_s
-      post = self.class.find_by_slug(slug)
+      obj = self.class.find_by_slug(slug)
       count += 1
     end
 
@@ -38,6 +32,12 @@ module Sluggable
       .gsub(/[-_]{2,}/, '-')
       .gsub(/^[-_]/, '')
       .gsub(/[-_]$/, '')
+  end
+
+  module ClassMethods
+    def sluggable_column(column_name)
+      self.slug_column = column_name
+    end
   end
 
 end
