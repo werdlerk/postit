@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  include Slug
+  include Sluggable
 
   has_many :posts
   has_many :comments
