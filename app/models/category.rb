@@ -4,7 +4,13 @@ class Category < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: true
 
+  before_save :generate_slug!
+
   def to_param
-    self.name.downcase
+    self.slug
+  end
+
+  def generate_slug!
+    self.slug = self.name.gsub(' ', '-').downcase
   end
 end
