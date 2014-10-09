@@ -84,9 +84,6 @@ class PostsController < ApplicationController
   private
 
   def require_creator_or_admin
-    unless @post.creator == current_user || current_user.admin?
-      flash[:error] = "This operation is not permitted."
-      redirect_to post_path(@post)
-    end
+    access_denied unless logged_in? and (@post.creator == current_user || current_user.admin?)
   end
 end
