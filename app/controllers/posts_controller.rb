@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :get_post, only: [:show, :edit, :update, :vote]
   before_action :require_user, except: [:show, :index, :vote]
-  before_action :require_creator, only: [:edit, :update]
+  before_action :require_creator_or_admin, only: [:edit, :update]
 
   def index
     @posts = Post.all.newest_first.sort_by { |post| post.votes_total }.reverse
@@ -83,8 +83,8 @@ class PostsController < ApplicationController
 
   private
 
-  def require_creator
-    if @post.creator != current_user
+  def require_creator_or_admin
+    unless @post.creator == current_user || current_user.admin?
       flash[:error] = "This operation is not permitted."
       redirect_to post_path(@post)
     end

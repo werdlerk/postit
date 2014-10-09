@@ -1,6 +1,6 @@
 <%= render "shared/breadcrumb", nodes: [link_to("Posts", posts_path), @post.title] %>
 
-<% if current_user == @post.creator %>
+<% if current_user == @post.creator || current_user.admin?%>
   <%= link_to edit_post_path(@post), :class => "btn pull-right" do %>
     <i class="icon-pencil"></i> Edit post
   <% end %>
