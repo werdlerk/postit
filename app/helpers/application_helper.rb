@@ -18,7 +18,7 @@ module ApplicationHelper
     if logged_in? && current_user.time_zone
       datetime = datetime.in_time_zone(current_user.time_zone)
     end
-    datetime.strftime("%-m %b %Y, %H:%M")
+    datetime.strftime("%-m %b %Y, %H:%M (%Z)")
   end
 
   def abbreviate(str)

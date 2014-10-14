@@ -13,7 +13,7 @@
     <dt>Role:</dt>
     <dd><%= user_role(@user) %></dd>
     <dt>Time zone:</dt>
-    <dd><%= ActiveSupport::TimeZone.new(@user.time_zone) %></dd>
+    <dd><%= @user.time_zone ? ActiveSupport::TimeZone.new(@user.time_zone) : Time.zone %></dd>
   </dl>
 </div>
 
