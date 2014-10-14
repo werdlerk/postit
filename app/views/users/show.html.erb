@@ -12,6 +12,8 @@
     <dd><%= @user.username %></dd>
     <dt>Role:</dt>
     <dd><%= user_role(@user) %></dd>
+    <dt>Time zone:</dt>
+    <dd><%= ActiveSupport::TimeZone.new(@user.time_zone) %></dd>
   </dl>
 </div>
 
