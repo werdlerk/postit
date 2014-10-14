@@ -15,7 +15,7 @@ module ApplicationHelper
   end
 
   def format_datetime(datetime)
-    if logged_in? && current_user.time_zone
+    if logged_in? && !current_user.time_zone.blank?
       datetime = datetime.in_time_zone(current_user.time_zone)
     end
     datetime.strftime("%-m %b %Y, %H:%M (%Z)")
